@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rekenmachine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem auto;
+            max-width: 24rem;
+            padding: 0 1rem;
+        }
+
+        label, input, select, button {
+            display: block;
+            margin-top: 0.75rem;
+        }
+
+        input, select, button {
+            box-sizing: border-box;
+            font: inherit;
+            padding: 0.5rem;
+            width: 100%;
+        }
+
+        #result {
+            min-height: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Rekenmachine</h1>
+        <form id="calculator">
+            <label for="num1">Eerste getal</label>
+            <input id="num1" name="num1" type="number" step="any" required>
+
+            <label for="operation">Bewerking</label>
+            <select id="operation" name="operation">
+                <option value="+">Optellen (+)</option>
+                <option value="-">Aftrekken (-)</option>
+                <option value="*">Vermenigvuldigen (*)</option>
+                <option value="/">Delen (/)</option>
+            </select>
+
+            <label for="num2">Tweede getal</label>
+            <input id="num2" name="num2" type="number" step="any" required>
+
+            <button type="submit">Bereken</button>
+        </form>
+        <p id="result" role="status" aria-live="polite"></p>
+    </main>
+
+    <script>
+        const form = document.querySelector("#calculator");
+        const result = document.querySelector("#result");
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const num1 = Number(form.elements.num1.value);
+            const num2 = Number(form.elements.num2.value);
+            const operation = form.elements.operation.value;
+
+            if (operation === "/" && num2 === 0) {
+                result.textContent = "Delen door nul kan niet.";
+                return;
+            }
+
+            let answer;
+            switch (operation) {
+                case "+":
+                    answer = num1 + num2;
+                    break;
+                case "-":
+                    answer = num1 - num2;
+                    break;
+                case "*":
+                    answer = num1 * num2;
+                    break;
+                case "/":
+                    answer = num1 / num2;
+                    break;
+            }
+
+            result.textContent = `Resultaat: ${answer}`;
+        });
+    </script>
+</body>
+</html>
